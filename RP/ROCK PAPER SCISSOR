@@ -1,0 +1,103 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+int main() {
+    srand(static_cast<unsigned int>(time(0))); // Seed for random number generation
+
+    int userScore = 0, computerScore = 0, user2Score = 0;
+    int mode;
+
+    cout << "Choose mode: (1) Play against Computer, (2) Play against another User: ";
+    cin >> mode;
+
+    if (mode != 1 && mode != 2) {
+        cout << "Invalid mode selected. Exiting..." << endl;
+        return 1;
+    }
+
+    while (true) {
+        cout << "\nEnter your choice (1 for Rock, 2 for Paper, 3 for Scissors, 0 to quit): ";
+        int userChoice;
+        cin >> userChoice;
+
+        if (userChoice == 0) {
+            cout << "Game Over!" << endl;
+            break;
+        }
+
+        if (userChoice < 1 || userChoice > 3) {
+            cout << "Invalid choice. Please enter a number between 1 and 3." << endl;
+            continue;
+        }
+
+        int opponentChoice;
+
+        if (mode == 1) {
+            // Play against computer
+            opponentChoice = rand() % 3 + 1;
+            cout << "Computer's choice: ";
+        } else {
+            // Play against another user
+            cout << "Second user, enter your choice (1 for Rock, 2 for Paper, 3 for Scissors): ";
+            cin >> opponentChoice;
+
+            if (opponentChoice < 1 || opponentChoice > 3) {
+                cout << "Invalid choice by second user. Please enter a number between 1 and 3." << endl;
+                continue;
+            }
+
+            cout << "Second user's choice: ";
+        }
+
+        switch (opponentChoice) {
+            case 1: cout << "Rock" << endl; break;
+            case 2: cout << "Paper" << endl; break;
+            case 3: cout << "Scissors" << endl; break;
+        }
+
+        cout << "Your choice: ";
+        switch (userChoice) {
+            case 1: cout << "Rock" << endl; break;
+            case 2: cout << "Paper" << endl; break;
+            case 3: cout << "Scissors" << endl; break;
+        }
+
+        if (userChoice == opponentChoice) {
+            cout << "It's a tie!" << endl;
+        } else if ((userChoice == 1 && opponentChoice == 3) ||
+                   (userChoice == 2 && opponentChoice == 1) ||
+                   (userChoice == 3 && opponentChoice == 2)) {
+            cout << "You win!" << endl;
+            userScore++;
+        } else {
+            if (mode == 1) {
+                cout << "Computer wins!" << endl;
+                computerScore++;
+            } else {
+                cout << "Second user wins!" << endl;
+                user2Score++;
+            }
+        }
+
+        // Display the score
+        if (mode == 1) {
+            cout << "Score - You: " << userScore << ", Computer: " << computerScore << endl;
+        } else {
+            cout << "Score - User 1: " << userScore << ", User 2: " << user2Score << endl;
+        }
+    }
+
+    // Final score
+    cout << "\nFinal Score:" << endl;
+    if (mode == 1) {
+        cout << "You: " << userScore << " | Computer: " << computerScore << endl;
+    } else {
+        cout << "User 1: " << userScore << " | User 2: " << user2Score << endl;
+    }
+
+    cout << "Thanks for playing!" << endl;
+
+    return 0;
+}
